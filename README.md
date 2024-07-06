@@ -1,0 +1,2 @@
+A Web application built using Web Technologies and Machine Learning algorithms which gamifies the process of learning with a function called "Study-Tracker" which tracks whether a student is studying or not based on eye gaze detection and optical character recognition and helps the student stay focused while studying.
+Other features include (1)a Leaderboard which shows the position of a student among his friends and (2)a Document Summarizer which summarizes the contents of the uploaded document file.
