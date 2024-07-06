@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CSS User Profile Card</title>
+	<link rel="stylesheet" href="profile.css">
+	<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+</head>
+    <body class='overflow-x-hidden'>
+        <div class="container mx-auto">
+    <header>
+        <nav class="flex justify-between">
+            <div class="logo font-bold flex items-center text-blue">StudyHub</div>
+            <ul class="navbar flex items-center">
+                <li><a href="/home"><button class="btn">Home</button></a></li>
+                <li><a href="/leaderboard"><button class="btn">Leaderboard</button></a></li>
+                <li><a href="/summarizer"><button class="btn">Summarizer</button></a></li>
+            </ul>
+        </nav>
+        <hr>
+    </header>
+<div class="wrapper">
+    <div class="left">
+        <img src="https://static.vecteezy.com/system/resources/previews/018/765/138/original/user-profile-icon-in-flat-style-member-avatar-illustration-on-isolated-background-human-permission-sign-business-concept-vector.jpg" 
+        alt="user" width="100">
+        <h4><%= user.name %></h4>
+    </div>
+    <div class="right">
+        <div class="info">
+            <h3>Time spent Learning</h3>
+            <div class="info_data">
+                 <div class="data">
+                    <p><%= user.timeSpent %> minutes</p>
+                 </div>
+            </div>
+        </div>
+      
+      <div class="projects">
+            <h3>Exp</h3>
+            <div class="projects_data">
+                 <div class="data">
+                    <p><%= user.exp %> points</p>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+</html>

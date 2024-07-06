@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensure padding and border are included in element's total width and height */
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.container {
+    max-width: 80vw;
+    margin: 0 auto;
+}
+
+.navbar {
+    display: flex;
+    height: 67px;
+}
+
+.navbar li {
+    list-style: none;
+    margin: 0 12px;
+}
+
+.logo {
+    font-size: 1.3rem;
+}
+
+.section2 {
+    padding: 5px 73px 5px;
+}
+
+.box {
+    padding: 8px;
+    margin: 12px 22px;
+    width: 100%;
+    min-width: 20vw;
+    border: 2px solid rgb(120, 54, 16);
+    border-radius: 8px;
+    text-align: left; /* Adjusted to align text to the left */
+    overflow-y: auto; /* Enable vertical scroll if content exceeds box height */
+    max-height: 60vh; /* Limit maximum height to prevent excessive scrolling */
+    white-space: pre-wrap; /* Preserve whitespace and wrap lines */
+    font-size: 16px;
+}
+
+.form-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn {
+    padding: 7px 12px;
+    border: 2px solid white;
+    border-radius: 6px;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(227, 74, 56);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-blue {
+    color: rgb(227, 74, 56);
+}
+
+.flex {
+    display: flex;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.font-bold {
+    font-weight: bolder;
+}
+
+.my-2 {
+    margin-top: 26px;
+    margin-bottom: 26px;
+}
+
+.overflow-x-hidden {
+    overflow-x: hidden;
+}

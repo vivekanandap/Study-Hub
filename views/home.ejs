@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyHub - The best Study-Tracker</title>
+    <link rel="stylesheet" href="home.css">
+    <style>
+        /* Popup container */
+        .popup {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Popup content */
+        .popup-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+
+        /* Close button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .popup-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+    </style>
+        <script>
+            let inactivityCheckInterval = setInterval(checkInactivity, 5000); // Check every 5 seconds
+    
+            function checkInactivity() {
+                fetch('/inactivity-status')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.inactivity) {
+                            alert("It has been 5 minutes since you took a break. Get back to studying");
+                            clearInterval(inactivityCheckInterval);
+                        }
+                    });
+            }
+        </script>
+</head>
+
+<body class="overflow-x-hidden">
+    <div class="container mx-auto">
+        <header>
+            <nav class="flex justify-between">
+                <div class="logo font-bold flex items-center text-blue">StudyHub</div>
+                <ul class="navbar flex items-center">
+                    <li><a href="/leaderboard"><button class="btn">Leaderboard</button></a></li>
+                    <li><a href="/summarizer"><button class="btn">Summarizer</button></a></li>
+                    <li><a href="/profile"><button class="btn">Profile</button></a></li>
+                </ul>
+            </nav>
+            <hr>
+        </header>
+        <main class="min-h-screen">
+            <section class="section1">
+                <div class="flex">
+                    <div class="topleft flex flex-col justify-center px-2">
+                        <div class="text-center">
+                            <img class="dumbellimg" src="studytrack.jpeg" alt="Study-Tracker">
+                        </div>
+                        <h1 class="my-1 text-center">A Study tracking app to keep you going</h1>
+                        <p class="text-center">Education is the key to success. Many students who are capable of scoring well in their exams but are often distracted by their environment. 
+                            StudyHub is a web application designed to assist students in tracking their study activities.
+                            The app aims to create a competitive yet collaborative learning environment.</p>
+                        <div class="buttons">
+                            <button class="btn" id="startStopButton">Start Tracker</button>
+                        </div>
+                    </div>
+                    <div class="topright flex justify-center" id="cameraContainer">
+                        <img class="gymimg" src="studytrack2.jpeg" alt="Study-Tracker">
+                    </div>
+                </div>
+            </section>
+            <hr>
+            <section class="section2">
+                <h1 class="text-center my-2">Features</h1>
+                <div class="boxes flex justify-center">
+                    <div class="box">
+                        <h2>Study-Tracker</h2>
+                        <p>The Study-Tracker allows you to track your study pattern and adapt to your timings.</p>
+                    </div>
+                    <div class="box">
+                        <h2>Leaderboard</h2>
+                        <p>The Leaderboard is where you will be able to compare yourself with your fellow trackers to know where you stand in your surroundings.</p>
+                    </div>
+                </div>
+            </section>
+            <hr>
+        </main>
+        <footer>
+            Copyright &copy; StudyHub.com | All rights reserved
+        </footer>
+    </div>
+
+    <div id="inactivityPopup" class="popup">
+        <div class="popup-content">
+            <span class="close" id="closePopup">&times;</span>
+            <p>It has been 5 minutes since you took a break. Get back to studying.</p>
+            <div class="popup-buttons">
+                <button class="btn" id="restartTrackerButton">Start Tracker</button>
+                <button class="btn" id="closeButton">OK</button>
+            </div>
+        </div>
+    </div>
+
+<!-- <div>
+    <br><hr><br>
+    <p id="status1"></p>
+    <br><hr><br>
+    <p id="status2"></p>
+    <br><hr><br>
+</div> -->
+    <script>
+        let isTracking = false;
+
+        const startStopButton = document.getElementById("startStopButton");
+        startStopButton.addEventListener("click", async () => {
+            if (!isTracking) {
+                try {
+                    const response = await fetch('/start-tracker', { method: 'POST' });
+                    if (response.ok) {
+                        startTracker();
+                    } else {
+                        console.error('Failed to start tracker');
+                    }
+                } catch (error) {
+                    console.error("Error starting tracker:", error);
+                }
+            } else {
+                stopTracker();
+            }
+        });
+
+        async function stopTracker() {
+            try {
+                const response = await fetch('/stop-tracker', { method: 'POST' });
+                if (response.ok) {
+                    startStopButton.textContent = "Start Tracker";
+                    isTracking = false;
+                } else {
+                    console.error('Failed to stop tracker');
+                }
+            } catch (error) {
+                console.error("Error stopping tracker:", error);
+            }
+        }
+
+        function startTracker() {
+            startStopButton.textContent = "Stop Tracker";
+            isTracking = true;
+
+            // Start polling the server for detection status
+            pollDetectionStatus();
+        }
+
+        async function pollDetectionStatus() {
+            if (!isTracking) return;
+
+            try {
+                const response1 = await fetch('/detection-status');
+                if (response1.ok) {
+                    const data1 = await response1.json();
+                    const status1 = data1.is_looking ? 'Looking' : 'Not looking';
+                    document.getElementById('status1').textContent = status1;
+                }
+            } catch (error) {
+                console.error("Error fetching detection status:", error);
+            }
+
+            try {
+                const response2 = await fetch('/reading-status');
+                if (response2.ok) {
+                    const data2 = await response2.json();
+                    const status2 = data2.is_reading ? 'Reading' : 'Not Reading';
+                    document.getElementById('status2').textContent = status2
+                }
+            } catch (error) {
+                console.error("Error fetching reading status:", error);
+            }
+
+            setTimeout(pollDetectionStatus, 1000); // Poll every second
+        }
+
+        const inactivityPopup = document.getElementById("inactivityPopup");
+        const closePopup = document.getElementById("closePopup");
+        const restartTrackerButton = document.getElementById("restartTrackerButton");
+        const closeButton = document.getElementById("closeButton");
+
+        function showInactivityPopup() {
+            inactivityPopup.style.display = "block";
+        }
+
+        closePopup.onclick = () => {
+            inactivityPopup.style.display = "none";
+        };
+
+        restartTrackerButton.onclick = async () => {
+            try {
+                const response = await fetch('/start-tracker', { method: 'POST' });
+                if (response.ok) {
+                    startTracker();
+                } else {
+                    console.error('Failed to start tracker');
+                }
+            } catch (error) {
+                console.error("Error starting tracker:", error);
+            }
+            inactivityPopup.style.display = "none";
+        };
+
+        closeButton.onclick = () => {
+            inactivityPopup.style.display = "none";
+        };
+
+        window.onclick = (event) => {
+            if (event.target === inactivityPopup) {
+                inactivityPopup.style.display = "none";
+            }
+        };
+
+    </script>
+</body>
+
+</html>

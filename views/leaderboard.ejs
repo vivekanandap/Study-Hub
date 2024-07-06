@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyHub - The best Study-Tracker</title>
+    <link rel="stylesheet" href="leaderboard.css">
+</head>
+
+<body class='overflow-x-hidden'>
+    <div class="container mx-auto">
+        <header>
+            <nav class="flex justify-between">
+                <div class="logo font-bold flex items-center text-blue">StudyHub</div>
+                <ul class="navbar flex items-center">
+                    <li><a href="/home"><button class="btn">Home</button></a></li>
+                    <li><a href="/summarizer"><button class="btn">Summarizer</button></a></li>
+                    <li><a href="/profile"><button class="btn">Profile</button></a></li>
+                </ul>
+            </nav>
+            <hr>
+        </header>
+        <main class="min-h-screen">
+            <section class="section2">
+                <h2>Leaderboard</h2>
+                <table border>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Username</th>
+                            <!-- <th>Time Spent (seconds)</th> -->
+                            <th>Exp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach((user, index) => { %>
+                            <tr>
+                                <td><%= index + 1 %></td>
+                                <td><%= user.name %></td>
+                                <!-- <td><%= user.timeSpent %></td> -->
+                                <td><%= user.exp %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </section>
+            <hr>
+        </main>
+        <footer>
+            Copyright &copy; StudyHub.com | All rights reserved
+        </footer>
+    </div>
+</body>
+</html>

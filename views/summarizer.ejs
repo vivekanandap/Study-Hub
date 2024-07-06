@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Summarize PDF</title>
+        <link rel="stylesheet" href="summarizer.css">
+    </head>
+    <body class='overflow-x-hidden'>
+        <div class="container mx-auto">
+            <header>
+                <nav class="flex justify-between">
+                    <div class="logo font-bold flex items-center text-blue">StudyHub</div>
+                    <ul class="navbar flex items-center">
+                        <li><a href="/home"><button class="btn">Home</button></a></li>
+                        <li><a href="/leaderboard"><button class="btn">Leaderboard</button></a></li>
+                        <li><a href="/profile"><button class="btn">Profile</button></a></li>
+                    </ul>
+                </nav>
+                <hr>
+            </header>
+            <div class="container">
+                <br>
+                <h1 class="flex justify-center">PDF Summarizer</h1><br>
+                <form action="/upload" method="post" enctype="multipart/form-data" class="form-center">
+                    <label><h4>Upload a PDF file</h4></label><br>
+                    <input type="file" name="file">
+                    <br>
+                    <button type="submit" class="btn">Summarize</button>
+                </form>
+                <section class="section2">
+                    <h1 class="text-center my-2">Summary</h1>
+                    <div class="boxes flex justify-center">
+                        <div class="box">
+                            <% if (error) { %>
+                                <p><%= error %></p>
+                            <% } else if (summary) { %>
+                                <pre><%= summary %></pre>
+                            <% } %>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </body>
+</html>
